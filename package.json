@@ -1,0 +1,41 @@
+{
+  "name": "express-micro",
+  "version": "0.1.0",
+  "description": "A lightweight Express.js plugin for automatic service discovery and inter-service communication in microservice architectures.",
+  "main": "index.js",
+  "type": "commonjs",
+  "keywords": [
+    "express",
+    "microservices",
+    "service-discovery",
+    "plugin",
+    "nodejs",
+    "express-middleware",
+    "api-gateway",
+    "distributed-systems"
+  ],
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tariux/Express-Micro.git"
+  },
+  "author": "opiumdev <opiumdev@proton.me>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "axios": "^1.13.1",
+    "express": "^5.1.0",
+    "node-fetch": "^3.3.2"
+  },
+  "exports": {
+    ".": {
+      "import": "./src/index.js"
+    }
+  },
+  "files": [
+    "src",
+    "README.md"
+  ]
+}
