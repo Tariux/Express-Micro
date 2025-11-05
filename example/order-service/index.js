@@ -1,27 +1,30 @@
 const express = require('express');
-const microXpressDiscovery = require('../../');
+const cors = require('cors');
+const expressMicro = require('../../');
 
 // --- 1. Create Express App ---
 const app = express();
 app.use(express.json());
+app.use(cors());
 
-const PORT = 6001;
+const PORT = 7002;
 
 // --- Mock Database ---
 const orders = [];
 
 
-// --- 2. Initialize MicroXpress Discovery ---
+// --- 2. Initialize ExpressMicro Discovery ---
 // We initialize this *before* defining routes that use the 'services' client.
-const { services } = microXpressDiscovery(app, {
-    serviceName: 'order-service',
+const { services } = expressMicro(app, {
+    host: 'localhost',
+    serviceName: 'orderService',
     port: PORT,
-    peers: ['http://localhost:6000'], // The address of the auth-service
+    peers: ['http://localhost:7001'], // The address of the authService
 });
 
 
 // --- 3. Define Route Handlers ---
-// This handler uses the discovery client to call the auth-service.
+// This handler uses the discovery client to call the authService.
 async function createOrder(req, res) {
     const { userId, product } = req.body;
     if (!userId || !product) {
@@ -29,7 +32,7 @@ async function createOrder(req, res) {
     }
 
     try {
-        console.log(`[Order Service] Received order for user ${userId}. Verifying user with auth-service...`);
+        console.log(`[Order Service] Received order for user ${userId}. Verifying user with authService...`);
 
         // Use the developer-friendly API to call the remote service
         const userProfile = await services.authService.getProfile({ id: userId });

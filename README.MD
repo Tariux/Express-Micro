@@ -1,4 +1,4 @@
-curl http://localhost:6000/_discovery/services \
+curl http://localhost:7001/_discovery/services \
      -H "Authorization: Bearer <KEY>
 
 
@@ -7,8 +7,8 @@ curl http://localhost:6000/_discovery/services \
 
 {
     "thisService": {
-        "name": "order-service",
-        "url": "http://192.168.218.1:6001",
+        "name": "orderService",
+        "url": "http://192.168.218.1:7002",
         "routes": [
             {
                 "path": "/orders","stac
@@ -19,12 +19,15 @@ ue
     ]
 },
 "connectedPeers": {
-    "auth-service": {
-        "url": "http://192.168.218.1:6000",
+    "authService": {
+        "url": "http://192.168.218.1:7001",
         "routes": [
             {
-                "path":"/profile/:id","stack":[{"keys":[],"name":"getProfile","slash":false,"matchers":[null],"method":"get"}],"methods":{"get
-":true}},{"path":"/login","stack":[{"keys":[],"name":"loginUser","slash":false,"matchers":[null],"method":"post"
+                "path":"/profile/:id",
+                
+                "stack":[{"keys":[],"name":"getProfile","slash":false,"matchers":[null],"method":"get"}],
+                "methods":{"get":true}}
+,{"path":"/login","stack":[{"keys":[],"name":"loginUser","slash":false,"matchers":[null],"method":"post"
             }
         ],
         "methods": {

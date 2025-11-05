@@ -8,17 +8,17 @@ const ServiceClient = require('./lib/client');
 const NetworkUtils = require('./lib/network');
 
 /**
- * Initializes the MicroXpress Discovery plugin.
+ * Initializes the ExpressMicro Discovery plugin.
  * @param {object} app - The Express application instance.
  * @param {object} options - Configuration options for the plugin.
  * @returns {object} An object containing the services client API.
  */
-function microXpressDiscovery(app, options = {}) {
+function expressMicro(app, options = {}) {
   // 1. Basic configuration setup
   const serviceName = options.serviceName || process.env.npm_package_name || 'unnamed-service';
   const port = options.port || app.get('port');
   if (!port) {
-    throw new Error('MicroXpress Discovery: Port is not defined. Ensure app.listen has been called or configure the port option.');
+    throw new Error('ExpressMicro Discovery: Port is not defined. Ensure app.listen has been called or configure the port option.');
   }
   const host = options.host || NetworkUtils.getLocalIpAddress() || '127.0.0.1';
   
@@ -47,9 +47,8 @@ function microXpressDiscovery(app, options = {}) {
   setTimeout(() => {
     // Now we scan for routes
     const discoveredRoutes = RouteScanner.scan(app);
-    console.log('>XXX' , discoveredRoutes);
     
-    selfMetadata.routes = Object.values(discoveredRoutes); // Update the object that EndpointManager has a reference to
+    selfMetadata.routes = discoveredRoutes; // Update the object that EndpointManager has a reference to
     logger.info(`Discovered ${Object.keys(discoveredRoutes).length} routes for this service.`);
 
     // And now we can discover peers, sending them our complete metadata
@@ -65,4 +64,4 @@ function microXpressDiscovery(app, options = {}) {
   return { services };
 }
 
-module.exports = microXpressDiscovery;
+module.exports = expressMicro;

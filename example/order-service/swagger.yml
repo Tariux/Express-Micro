@@ -1,0 +1,21 @@
+openapi: 3.0.0
+info:
+  title: Order Service API
+  version: 1.0.0
+  description: API for managing orders
+servers:
+  - url: http://localhost:7002
+    description: Order Service
+paths:
+  /orders:
+    post:
+      summary: Create order
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, properties: { userId: { type: string }, product: { type: string } } } } }
+      responses:
+        '201': { description: Order created, content: { application/json: { schema: { type: object, properties: { orderId: { type: string }, product: { type: string }, customerName: { type: string } } } } } }
+        '400': { description: Missing fields }
+        '404': { description: User not found }
+        '503': { description: Auth unavailable }
+        '500': { description: Internal error }

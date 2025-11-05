@@ -1,11 +1,13 @@
 const express = require('express');
-const microXpressDiscovery = require('../../');
+const cors = require('cors');
+const expressMicro = require('../../');
 
 // --- 1. Create Express App ---
 const app = express();
 app.use(express.json());
+app.use(cors());
 
-const PORT = 6000;
+const PORT = 7001;
 
 // --- Mock Database ---
 const users = {
@@ -42,14 +44,18 @@ function loginUser(req, res) {
 // These routes will be discovered by the plugin.
 app.get('/profile/:id', getProfile);
 app.post('/login', loginUser);
+app.get('/discover', (req, res) => {
+    res.json({ message: `Discover` });
+});
 
 
-// --- 4. Initialize MicroXpress Discovery ---
+// --- 4. Initialize ExpressMicro Discovery ---
 // It's crucial to initialize this *after* all routes are defined.
-microXpressDiscovery(app, {
-  serviceName: 'auth-service', // Explicitly name our service
+expressMicro(app, {
+  host: 'localhost',
+  serviceName: 'authService', // Explicitly name our service
   port: PORT,
-  peers: ['http://localhost:6001'], // The address of the order-service
+  peers: ['http://localhost:7002'], // The address of the orderService
   onServiceUp: (name) => console.log(`[Discovery] Event: Service '${name}' is UP.`),
   onServiceDown: (name) => console.log(`[Discovery] Event: Service '${name}' is DOWN.`),
 });

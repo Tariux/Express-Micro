@@ -1,0 +1,29 @@
+openapi: 3.0.0
+info:
+  title: Auth Service API
+  version: 1.0.0
+  description: API for authentication and user profiles
+servers:
+  - url: http://localhost:7001
+    description: Auth Service
+paths:
+  /profile/{id}:
+    get:
+      summary: Get user profile
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: User profile, content: { application/json: { schema: { type: object, properties: { id: { type: string }, name: { type: string }, email: { type: string } } } } } }
+        '404': { description: User not found }
+  /login:
+    post:
+      summary: Login user
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, properties: { email: { type: string } } } } }
+      responses:
+        '200': { description: Login success, content: { application/json: { schema: { type: object, properties: { message: { type: string }, userId: { type: string } } } } } }
+        '401': { description: Invalid credentials }
