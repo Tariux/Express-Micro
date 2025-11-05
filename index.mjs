@@ -1,11 +1,15 @@
-const path = require('path');
-const Security = require('./lib/security');
-const Logger = require('./lib/logger');
-const RouteScanner = require('./lib/scanner');
-const ServiceRegistry = require('./lib/registry');
-const EndpointManager = require('./lib/endpoints');
-const ServiceClient = require('./lib/client');
-const NetworkUtils = require('./lib/network');
+import path from 'path';
+import { fileURLToPath } from 'url';
+import Security from './lib/security.js';
+import Logger from './lib/logger.js';
+import RouteScanner from './lib/scanner.js';
+import ServiceRegistry from './lib/registry.js';
+import EndpointManager from './lib/endpoints.js';
+import ServiceClient from './lib/client.js';
+import NetworkUtils from './lib/network.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Initializes the ExpressMicro Discovery plugin.
@@ -50,4 +54,4 @@ function expressMicro(app, options = {}) {
   return { services };
 }
 
-module.exports = expressMicro;
+export default expressMicro;
